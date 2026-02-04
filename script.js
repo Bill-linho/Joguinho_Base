@@ -1,81 +1,81 @@
 const mapaEl = document.getElementById("mapa");
 const turnoTexto = document.getElementById("turno");
 
-let jogadorAtual = 1;
-let selecionado = null;
+const LINHAS = 6;
+const COLUNAS = 6;
 
-const TOTAL = 15;
+let jogadorAtual = 1;
+
+const terrenos = ["planicie", "floresta", "montanha"];
 const mapa = [];
 
-function criarMapa() {
-  for (let i = 0; i < TOTAL; i++) {
-    const hex = document.createElement("div");
-    hex.classList.add("hex");
+/* Geração procedural */
+function gerarMapa() {
+  for (let y = 0; y < LINHAS; y++) {
+    const linhaEl = document.createElement("div");
+    linhaEl.classList.add("linha");
 
-    const territorio = {
-      dono: i < TOTAL / 2 ? 1 : 2,
-      tropas: Math.floor(Math.random() * 5) + 1,
-      el: hex
-    };
+    if (y % 2 !== 0) linhaEl.classList.add("par");
 
-    atualizarVisual(territorio);
+    mapa[y] = [];
 
-    hex.addEventListener("click", () => clicarHex(territorio));
-    mapa.push(territorio);
-    mapaEl.appendChild(hex);
+    for (let x = 0; x < COLUNAS; x++) {
+      const hex = document.createElement("div");
+      hex.classList.add("hex");
+
+      const terreno = terrenos[Math.floor(Math.random() * terrenos.length)];
+
+      const territorio = {
+        x,
+        y,
+        terreno,
+        dono: null,
+        tropas: 0,
+        el: hex
+      };
+
+      hex.classList.add(terreno);
+      hex.addEventListener("click", () => clicarHex(territorio));
+
+      mapa[y][x] = territorio;
+      linhaEl.appendChild(hex);
+    }
+
+    mapaEl.appendChild(linhaEl);
   }
+
+  distribuirJogadores();
 }
 
-function atualizarVisual(t) {
-  t.el.className = "hex";
-  t.el.classList.add(t.dono === 1 ? "j1" : "j2");
-  t.el.textContent = t.tropas;
+/* Distribuição inicial equilibrada */
+function distribuirJogadores() {
+  mapa[0][0].dono = 1;
+  mapa[0][0].tropas = 5;
+  mapa[0][0].el.classList.add("j1");
+
+  mapa[LINHAS - 1][COLUNAS - 1].dono = 2;
+  mapa[LINHAS - 1][COLUNAS - 1].tropas = 5;
+  mapa[LINHAS - 1][COLUNAS - 1].el.classList.add("j2");
+
+  atualizarTextos();
+}
+
+function atualizarTextos() {
+  mapa.flat().forEach(t => {
+    t.el.textContent = t.tropas > 0 ? t.tropas : "";
+  });
 }
 
 function clicarHex(t) {
-  // Selecionar território próprio
-  if (!selecionado && t.dono === jogadorAtual) {
-    selecionado = t;
-    t.el.classList.add("selecionado");
-    return;
-  }
-
-  // Atacar
-  if (selecionado && t !== selecionado && t.dono !== jogadorAtual) {
-    atacar(selecionado, t);
-    limparSelecao();
-  }
+  console.log(
+    `Hex (${t.x},${t.y}) | Terreno: ${t.terreno} | Dono: ${t.dono}`
+  );
 }
 
-function atacar(atacante, defensor) {
-  if (atacante.tropas <= 1) return;
-
-  const ataque = atacante.tropas - 1;
-
-  if (ataque > defensor.tropas) {
-    defensor.dono = jogadorAtual;
-    defensor.tropas = ataque - defensor.tropas;
-    atacante.tropas = 1;
-  } else {
-    defensor.tropas -= ataque;
-    atacante.tropas = 1;
-  }
-
-  atualizarVisual(atacante);
-  atualizarVisual(defensor);
-}
-
-function limparSelecao() {
-  if (selecionado) {
-    selecionado.el.classList.remove("selecionado");
-    selecionado = null;
-  }
-}
-
+/* Turnos */
 document.getElementById("fimTurno").addEventListener("click", () => {
-  limparSelecao();
   jogadorAtual = jogadorAtual === 1 ? 2 : 1;
   turnoTexto.textContent = `Turno do Jogador ${jogadorAtual}`;
 });
 
-criarMapa();
+gerarMapa();
