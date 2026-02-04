@@ -1,0 +1,56 @@
+body {
+  background: #0f0f0f;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+#mapa {
+  display: grid;
+  grid-template-columns: repeat(5, 90px);
+  gap: 5px;
+  justify-content: center;
+  margin: 30px auto;
+}
+
+/* Hexágono */
+.hex {
+  width: 90px;
+  height: 100px;
+  background: #444;
+  clip-path: polygon(
+    50% 0%,
+    100% 25%,
+    100% 75%,
+    50% 100%,
+    0% 75%,
+    0% 25%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.hex:hover {
+  transform: scale(1.05);
+}
+
+.j1 {
+  background: #1e90ff;
+}
+
+.j2 {
+  background: #e74c3c;
+}
+
+.selecionado {
+  outline: 3px solid yellow;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+}
