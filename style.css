@@ -13,6 +13,7 @@ body {
 /* Linha do mapa */
 .linha {
   display: flex;
+  margin: -20px 0;
 }
 
 /* Deslocamento das linhas pares */
@@ -25,7 +26,7 @@ body {
   width: 90px;
   height: 100px;
   clip-path: polygon(
-    50% 0%,
+    50% 2%,
     100% 25%,
     100% 75%,
     50% 100%,
