@@ -13,12 +13,12 @@ body {
 /* Linha do mapa */
 .linha {
   display: flex;
-  margin: -20px 0;
+  margin: -30px 0;
 }
 
 /* Deslocamento das linhas pares */
 .linha.par {
-  margin-left: 45px;
+  margin-left: 48px;
 }
 
 /* Hexágono */
@@ -26,7 +26,7 @@ body {
   width: 90px;
   height: 100px;
   clip-path: polygon(
-    50% 2%,
+    50% 0%,
     100% 25%,
     100% 75%,
     50% 100%,

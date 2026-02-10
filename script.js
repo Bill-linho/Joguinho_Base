@@ -1,8 +1,8 @@
 const mapaEl = document.getElementById("mapa");
 const turnoTexto = document.getElementById("turno");
 
-const LINHAS = 6;
-const COLUNAS = 6;
+const LINHAS = 9;
+const COLUNAS = 9;
 
 let jogadorAtual = 1;
 
@@ -70,6 +70,13 @@ function clicarHex(t) {
   console.log(
     `Hex (${t.x},${t.y}) | Terreno: ${t.terreno} | Dono: ${t.dono}`
   );
+}
+
+function expandir () {
+  hex.addEventListener("click", () => {
+  
+  })
+  
 }
 
 /* Turnos */
