@@ -74,10 +74,10 @@ function clicarHex(t) {
 }
 
 function expandir (t) {
-  t.addEventListener("click", (hex) => {
-    console.log(`Dominou terreno ${hex.x},${hex.y}`);
+  const territorio = t;
+  territorio.el.addEventListener("click", () => {
+    console.log(`Dominou terreno ${t.x},${t.y}`);
   })
-  
 }
 
 /* Turnos */
