@@ -70,11 +70,12 @@ function clicarHex(t) {
   console.log(
     `Hex (${t.x},${t.y}) | Terreno: ${t.terreno} | Dono: ${t.dono}`
   );
+  expandir(t);
 }
 
-function expandir () {
-  hex.addEventListener("click", () => {
-  
+function expandir (t) {
+  t.addEventListener("click", (hex) => {
+    console.log(`Dominou terreno ${hex.x},${hex.y}`);
   })
   
 }
